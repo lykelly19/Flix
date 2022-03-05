@@ -100,7 +100,28 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         return cell
     }
     
-
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
+        
+        print("Loading up the details screen")
+        
+        
+        // Find the selected movie
+        // sender -> cell that was tapped on
+        let cell = sender as! UITableViewCell
+        let indexPath = tableView.indexPath(for: cell)!  //  get indexPath for that cell
+        let movie = movies[indexPath.row]                // access that array
+        
+        // Pass the selected movie to the details view controller
+        // cast it, otherwise generic ViewController
+        let detailsViewController = segue.destination as! MovieDetailsViewController
+        detailsViewController.movie = movie
+        
+        // not highlighted when going back
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
 
 }
 
